@@ -39,17 +39,15 @@ graph = {
 }
 
 def iter_motifs(graph, seq, char, pos, motifs):
-  for nextchars in graph[char]:
-    for nextpos in nextpos:
+  for nextchar in graph[char]:
+    for nextpos in graph[char][nextchar]:
         if char is None or nextpos == pos + 1
             try:
                 motifs[seq + nextchar] += 1
             except KeyError:
                 motifs[seq + nextchar] = 1
             iter_motifs(graph, seq + nextchar, next_char, pos+1, motifs)
-        if char is None:
-            return motifs
-
+  return motifs
 
 # Call it with
 iter_motifs(graph, '', None, -1, {})
@@ -69,11 +67,25 @@ def iter_motifs(graph, seq, char, pos, motifs):
         if char is None:
             return motifs
 
+substrs = {}
+def iter_substrs(s, subs, pos):
+    if subs != ''
+        try:
+            substrs[subs] += 1
+        except KeyError:
+            substrs[subs] = 1
+    if pos < len(s):
+        iter_substrs(s, subs + s[pos], pos+1)
+        if pos>0:
+            iter_substrs(s, s[pos], pos+1)
+
+iter_substr('CAGG','',0)
+iter_substr('CAGG','C',1)
+iter_substr('CAGG','CA',2)
 
 def minion_game(string):
     graph = {}
     motifs = {}
-    scores = {'Kevin':0, 'Stuart':0}
     for i in range(0,len(string)):
         charat = string[i]
         try:
@@ -86,15 +98,7 @@ def minion_game(string):
                 motifs[charprev].append(i)
             except KeyError:
                 motifs[(lastchar,curchar)] = [i]
-    for k,v in motifs.items():
-        player = 'Kevin' if k[0].lower() in ['a','e','i','o','u'] else 'Stuart'
-        scores[player] += v
-    if scores['Kevin'] > scores['Stuart']:
-        print(f'Kevin {scores["Kevin"]}')
-    elif scores['Kevin'] < scores['Stuart']:
-        print(f'Stuart {scores["Stuart"]}')
-    else:
-        print('Draw')
+
 
 if __name__ == '__main__':
     s = input()
