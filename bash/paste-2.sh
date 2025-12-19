@@ -2,7 +2,7 @@
 
 paste -d';;\n' -s
 
-# Much more long-winded way
+## Much more long-winded way:
 # rm -f splitme
 # while IFS= read -r LINE; do
 #   echo "$LINE" >> splitme
