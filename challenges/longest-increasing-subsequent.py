@@ -13,25 +13,32 @@ import sys
 # The function accepts INTEGER_ARRAY arr as parameter.
 #
 
+# return first element >= query
+def binary_search(qry, arr):
+    l = 0
+    r = len(arr)-1
+    while l <= r:
+      m = (r+l)//2
+      if qry == arr[m]:
+          return m
+      elif qry > arr[m]:
+          l = m + 1
+      elif qry < arr[m]:
+          r = m - 1
+    return l
+
 def longestIncreasingSubsequence(arr):
-    longest_subsequences = []
-    lens_longest_subsequences = []
-    for i in range(len(arr)):
-        longest_subsequences += [[arr[i]]]
-        lens_longest_subsequences += [1]
-        for j in range(i):
-            if arr[i] > arr[j]:
-                if lens_longest_subsequences[j] >= lens_longest_subsequences[i]:
-                    longest_subsequences[i] = longest_subsequences[j] + [arr[i]]
-                    lens_longest_subsequences[i] = lens_longest_subsequences[j] + 1
-    len_longest_subsequence = 0
-    longest_subsequence = []
-    for k in longest_subsequences:
-        len_current = len(k)
-        if len_current > len_longest_subsequence:
-            len_longest_subsequence = len_current
-            longest_subsequence = k
-    return len(longest_subsequence)
+    res = [arr[0]]
+    for i in range(1,len(arr)):
+        # extend the result array by 1 if this number would extend the subsequence
+        if arr[i] > res[-1]:
+            res.append(arr[i])
+        # otherwise, replace the smallest number in the result array that's greater than the number
+        else:
+            # binary search for element to replace
+            replace_me = binary_search(arr[i],res) # returns index of smallest number >= the query 
+            res[replace_me] = arr[i]
+    return len(res)
 
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')

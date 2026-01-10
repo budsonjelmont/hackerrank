@@ -8,7 +8,7 @@
       "name": "longest-increasing-subsequent",
       "type": "debugpy",
       "request": "launch",
-      "program": "python/longest-increasing-subsequent.py",
+      "program": "challenges/longest-increasing-subsequent.py",
       "console": "integratedTerminal",
       "env":{
         "OUTPUT_PATH":"${workspaceFolder}/scratch/longest-increasing-subsequent.out"
